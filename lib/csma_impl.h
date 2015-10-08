@@ -18,34 +18,40 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_IEEE802-11_CSMA_IMPL_H
-#define INCLUDED_IEEE802-11_CSMA_IMPL_H
+#ifndef INCLUDED_IEEE802_11_CSMA_IMPL_H
+#define INCLUDED_IEEE802_11_CSMA_IMPL_H
 
 #include <ieee802-11/csma.h>
 
 namespace gr {
-  namespace ieee802-11 {
+  namespace ieee802_11 {
 
     class csma_impl : public csma
     {
      private:
-      // Nothing to declare in this block.
+      float d_threshold;
+      float d_signal_power;
 
      public:
       csma_impl(float threshold, float signal_power);
       ~csma_impl();
 
-      // Where all the action really happens
-      void forecast (int noutput_items, gr_vector_int &ninput_items_required);
+     
+      //void forecast (int noutput_items, gr_vector_int &ninput_items_required);
 
-      int general_work(int noutput_items,
-		       gr_vector_int &ninput_items,
-		       gr_vector_const_void_star &input_items,
-		       gr_vector_void_star &output_items);
+      //int general_work(int noutput_items,
+	//	       gr_vector_int &ninput_items,
+	//	       gr_vector_const_void_star &input_items,
+	//	       gr_vector_void_star &output_items);
+    //};
+
+
+	void in(pmt::pmt_t msg);
+	void wait_time(double wait_duration);
+	bool channel_state(float threshold);
     };
-
-  } // namespace ieee802-11
+  } // namespace ieee802_11
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802-11_CSMA_IMPL_H */
+#endif /* INCLUDED_IEEE802_11_CSMA_IMPL_H */
 

@@ -24,12 +24,13 @@
 
 #include <gnuradio/io_signature.h>
 #include "csma_impl.h"
+#include <boost/crc.hpp>
 #include <cstdlib>
 #include <cmath>
 
 
 namespace gr {
-  namespace ieee802-11 {
+  namespace ieee802_11 {
 
     csma::sptr
     csma::make(float threshold, float signal_power)
@@ -48,8 +49,11 @@ namespace gr {
     {
 		message_port_register_out(pmt::mp("out"));
 		message_port_register_in(pmt::mp("in"));
-		set_msg_handler(pmt::mp("in",
+		set_msg_handler(pmt::mp("in"),
 				boost::bind(&csma_impl::in, this, _1));
+		
+		d_threshold = threshold;
+		d_signal_power = signal_power;
 		
 	}
 
@@ -60,29 +64,29 @@ namespace gr {
     {
     }
 
-    void
-    csma_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
-    {
-        /* <+forecast+> e.g. ninput_items_required[0] = noutput_items */
-    }
+    //void
+    //csma_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
+    //{
+        //* <+forecast+> e.g. ninput_items_required[0] = noutput_items */
+    //}
 
-    int
-    csma_impl::general_work (int noutput_items,
-                       gr_vector_int &ninput_items,
-                       gr_vector_const_void_star &input_items,
-                       gr_vector_void_star &output_items)
-    {
-        const <+ITYPE*> *in = (const <+ITYPE*> *) input_items[0];
-        <+OTYPE*> *out = (<+OTYPE*> *) output_items[0];
+    //int
+    //csma_impl::general_work (int noutput_items,
+                       //gr_vector_int &ninput_items,
+                       //gr_vector_const_void_star &input_items,
+                       //gr_vector_void_star &output_items)
+    //{
+        //const <+ITYPE*> *in = (const <+ITYPE*> *) input_items[0];
+        //<+OTYPE*> *out = (<+OTYPE*> *) output_items[0];
 
-        // Do <+signal processing+>
-        // Tell runtime system how many input items we consumed on
-        // each input stream.
-        consume_each (noutput_items);
+        //// Do <+signal processing+>
+        //// Tell runtime system how many input items we consumed on
+        //// each input stream.
+        //consume_each (noutput_items);
 
-        // Tell runtime system how many output items we produced.
-        return noutput_items;
-    }
+        //// Tell runtime system how many output items we produced.
+        //return noutput_items;
+    //}
     
     void
     csma_impl::in(pmt::pmt_t msg)
@@ -100,7 +104,7 @@ namespace gr {
 		
 		//check channel state
 		bool okay_to_send = false;
-		okay_to_send = channel_state(threshold); 							// need to deal with
+		okay_to_send = channel_state(d_threshold); 							// need to deal with
 		
 		double n_attempts = 0;
 		double counter;
@@ -117,7 +121,7 @@ namespace gr {
 			
 			
 			//slot
-			backoff = (int)rand() % (cwmin[ac]*pow(2,n_attempts));
+			backoff = (int) (rand() % (cwmin[ac]*pow(2,n_attempts)));
 			counter = backoff;
 			
 			while (counter>0) 
@@ -125,22 +129,23 @@ namespace gr {
 				wait_time(slot_time);
 				
 				counter--;
-				okay_to_send = channel_state(threshold);
+				okay_to_send = channel_state(d_threshold);
 				if (!okay_to_send)
 				{
 					wait_time(aifs[ac]);
 				}
 			}
 			
-			okay_to_send = channel_state(threshold);
+			okay_to_send = channel_state(d_threshold);
 			n_attempts++;
 			if (n_attempts > max_attempts) {return;}
 			
 		}
 		
 		//send the msg
-		//message_port_pub
+		message_port_pub(pmt::mp("out"), msg);
 		
+		//post-tx aifs
 		wait_time(aifs[ac]);
 		
 		
@@ -163,9 +168,9 @@ namespace gr {
 	bool 
 	csma_impl::channel_state(float threshold)
 	{
-		//if (power >= threshold) {return true;}
+		if (d_signal_power >= threshold) {return true;}
 	}
 
-  } /* namespace ieee802-11 */
+  } /* namespace ieee802_11 */
 } /* namespace gr */
 

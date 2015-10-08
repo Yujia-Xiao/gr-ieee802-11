@@ -19,21 +19,21 @@
  */
 
 
-#ifndef INCLUDED_IEEE802-11_CSMA_H
-#define INCLUDED_IEEE802-11_CSMA_H
+#ifndef INCLUDED_IEEE802_11_CSMA_H
+#define INCLUDED_IEEE802_11_CSMA_H
 
 #include <ieee802-11/api.h>
 #include <gnuradio/block.h>
 
 namespace gr {
-  namespace ieee802-11 {
+  namespace ieee802_11 {
 
     /*!
      * \brief <+description of block+>
      * \ingroup ieee802-11
      *
      */
-    class IEEE802-11_API csma : virtual public gr::block
+    class IEEE802_11_API csma : virtual public gr::block
     {
      public:
       typedef boost::shared_ptr<csma> sptr;
@@ -49,8 +49,8 @@ namespace gr {
       static sptr make(float threshold, float signal_power);
     };
 
-  } // namespace ieee802-11
+  } // namespace ieee802_11
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802-11_CSMA_H */
+#endif /* INCLUDED_IEEE802_11_CSMA_H */
 
