@@ -84,6 +84,6 @@ list(APPEND include_sources
 install(
 	FILES ${include_sources}
     gen_frames.h
-    DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_11
+    csma.h DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_11
 	COMPONENT "ieee802_11_devel"
 )
