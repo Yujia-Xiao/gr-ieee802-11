@@ -27,6 +27,9 @@
 #include <boost/crc.hpp>
 #include <cstdlib>
 #include <cmath>
+#include "sshm.h"
+
+
 
 
 namespace gr {
@@ -91,6 +94,12 @@ namespace gr {
     void
     csma_impl::in(pmt::pmt_t msg)
     {
+		// get share memory
+		int segmentid;
+		double * power;
+		segmentid=shm_get(123456,(void**)&power,sizeof(double));
+		if (segmentid<0){printf("Error creating segmentid"); exit(0);};
+		
 		//parameter declaration
 		double max_attempts = 4.0;
 		double cwmin[2] = {3.0, 15.0};
@@ -104,7 +113,7 @@ namespace gr {
 		
 		//check channel state
 		bool okay_to_send = false;
-		okay_to_send = channel_state(d_threshold); 							// need to deal with
+		okay_to_send = channel_state(d_threshold, power); 							// need to deal with
 		
 		double n_attempts = 0;
 		double counter;
@@ -129,14 +138,14 @@ namespace gr {
 				wait_time(slot_time);
 				
 				counter--;
-				okay_to_send = channel_state(d_threshold);
+				okay_to_send = channel_state(d_threshold, power);
 				if (!okay_to_send)
 				{
 					wait_time(aifs[ac]);
 				}
 			}
 			
-			okay_to_send = channel_state(d_threshold);
+			okay_to_send = channel_state(d_threshold, power);
 			n_attempts++;
 			if (n_attempts > max_attempts) {return;}
 			
@@ -166,9 +175,11 @@ namespace gr {
 	}
 	
 	bool 
-	csma_impl::channel_state(float threshold)
+	csma_impl::channel_state(float threshold, float * power)
 	{
-		if (d_signal_power >= threshold) {return true;}
+		
+		if (*power >= threshold) {return true;}
+		return false;
 	}
 
   } /* namespace ieee802_11 */
