@@ -99,8 +99,8 @@ namespace gr {
 		
 		// extract the dictionary for the ac level
 		pmt::pmt_t p_dict(pmt::car(msg));
-		pmt::pmt_t ac_level = pmt::pmt_dict_ref(p_dict, pmt::pmt_symbol("ac_level"), pmt::PMT_NIL);
-		int ac = (int) pmt::pmt_to_long(ac_level);
+		pmt::pmt_t ac_level = pmt::pmt_dict_ref(p_dict, pmt::mp("ac_level"), pmt::PMT_NIL);
+		int ac = (int) pmt::mp(ac_level);
 		
 		//check channel state
 		bool okay_to_send = false;
