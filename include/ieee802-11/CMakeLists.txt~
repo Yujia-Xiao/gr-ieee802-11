@@ -80,12 +80,10 @@ list(APPEND include_sources
     ofdm_sync_long.h
     ofdm_sync_short.h
     wifi_signal_field.h
-    gen_frames.h
-    csma.h
-    channel_power.h
 )
 install(
-    FILES ${include_sources}
+	FILES ${include_sources}
+    gen_frames.h
     DESTINATION ${GR_INCLUDE_DIR}/gnuradio/ieee802_11
-    COMPONENT "ieee802_11_devel"
+	COMPONENT "ieee802_11_devel"
 )

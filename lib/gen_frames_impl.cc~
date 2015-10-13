@@ -20,6 +20,7 @@
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
+<<<<<<< HEAD
 #include "utils.h"
 #endif
 
@@ -35,12 +36,37 @@ namespace gr {
     {
       return gnuradio::get_initial_sptr
         (new gen_frames_impl(type, ac, duration, src_mac, dst_mac, bss_mac));
+=======
+#endif
+
+
+
+#include <gnuradio/io_signature.h>
+#include <gnuradio/block_detail.h>
+#include "gen_frames_impl.h"
+#include <string>
+#include <boost/crc.hpp>
+
+
+namespace gr {
+  namespace ieee802_11 {
+
+    gen_frames::sptr
+    gen_frames::make(float frame_type, long ac, std::uint16_t duration, std::vector<uint8_t> src_mac, std::vector<uint8_t> dst_mac, std::vector<uint8_t> bss_mac)
+    {
+      return gnuradio::get_initial_sptr
+        (new gen_frames_impl(frame_type, ac, duration, src_mac, dst_mac, bss_mac));
+>>>>>>> master
     }
 
     /*
      * The private constructor
      */
+<<<<<<< HEAD
     gen_frames_impl::gen_frames_impl(std::float type, long ac, std::uint16_t duration, std::vector<uint8_t> src_mac, std::vector<uint8_t> dst_mac, std::vector<uint8_t> bss_mac)
+=======
+    gen_frames_impl::gen_frames_impl(float frame_type, long ac, std::uint16_t duration, std::vector<uint8_t> src_mac, std::vector<uint8_t> dst_mac, std::vector<uint8_t> bss_mac)
+>>>>>>> master
       : gr::block("gen_frames",
               gr::io_signature::make(0,0,0),
               gr::io_signature::make(0,0,0)),
@@ -57,8 +83,24 @@ namespace gr {
 	if(!check_mac(dst_mac)) throw std::invalid_argument("wrong mac address size");
 	if(!check_mac(bss_mac)) throw std::invalid_argument("wrong mac address size");
 		
+<<<<<<< HEAD
 		
     }
+=======
+	for(int i = 0; i < 6; i++) {
+		d_src_mac[i] = src_mac[i];
+		d_dst_mac[i] = dst_mac[i];
+		d_bss_mac[i] = bss_mac[i];
+		}
+	d_frame_type = frame_type;
+    d_ac = ac;
+    d_duration = duration;
+    
+    
+    }
+    
+    
+>>>>>>> master
 
     /*
      * Our virtual destructor.
@@ -67,6 +109,7 @@ namespace gr {
     {
     }
 
+<<<<<<< HEAD
     void
     gen_frames_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
@@ -90,6 +133,10 @@ namespace gr {
         // Tell runtime system how many output items we produced.
         return noutput_items;
     }
+=======
+
+   
+>>>>>>> master
 
     void
     gen_frames_impl::data_input (pmt::pmt_t msg)
@@ -133,26 +180,46 @@ namespace gr {
 
 
 		
+<<<<<<< HEAD
 		if (type == 0)   
 	        {
 		  // data frame
 		  generate_mac_data_frame(msdu, msg_len, duration, &psdu, &psdu_length);
 	        }
 		else if (type == 1)
+=======
+		if (d_frame_type == 0)   
+	        {
+		  // data frame
+		  generate_mac_data_frame(msdu, msg_len, d_duration, &psdu, &psdu_length);
+	        }
+		else if (d_frame_type == 1)
+>>>>>>> master
 		  {
 		    // management frame
 		    generate_mac_management_frame();
 		  }
+<<<<<<< HEAD
 		else if (type == 2)
 		  {
 		    // ack frame
 		    generate_mac_ack_frame(duration, &psdu, &psdu_length);
+=======
+		else if (d_frame_type == 2)
+		  {
+		    // ack frame
+		    generate_mac_ack_frame(d_duration, &psdu, &psdu_length);
+>>>>>>> master
 
 		  }
 
 
 		dict = pmt::dict_add(dict, pmt::mp("crc_included"), pmt::PMT_T);
+<<<<<<< HEAD
 		dict = pmt::dict_add(dict, pmt::mp("ac_level"),  pmt::pmt_long(ac));
+=======
+		dict = pmt::dict_add(dict, pmt::mp("ac_level"),  pmt::mp(d_ac));
+>>>>>>> master
 
 
 		// check if csma is enabled
@@ -193,9 +260,15 @@ namespace gr {
 		header.duration = duration;
 
 		for(int i = 0; i < 6; i++) {
+<<<<<<< HEAD
 			header.addr1[i] = dst_mac[i];
 			header.addr2[i] = src_mac[i];
 			header.addr3[i] = bss_mac[i];
+=======
+			header.addr1[i] = d_dst_mac[i];
+			header.addr2[i] = d_src_mac[i];
+			header.addr3[i] = d_bss_mac[i];
+>>>>>>> master
 		}
 
 		header.seq_nr = 0;
@@ -240,7 +313,11 @@ namespace gr {
 		header.duration = duration;
 
 		for(int i = 0; i < 6; i++) {
+<<<<<<< HEAD
 			header.addr1[i] = dst_mac[i];
+=======
+			header.addr1[i] = d_dst_mac[i];
+>>>>>>> master
 			
 		}
 
@@ -259,6 +336,10 @@ namespace gr {
 	}
 
 
+<<<<<<< HEAD
+=======
+	
+>>>>>>> master
   } /* namespace ieee802-11 */
 } /* namespace gr */
 
