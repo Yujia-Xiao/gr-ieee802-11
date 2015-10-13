@@ -62,8 +62,9 @@ void parse(pmt::pmt_t msg) {
 
 	dout << std::endl << "new mac frame  (length " << data_len << ")" << std::endl;
 	dout << "=========================================" << std::endl;
-	if(data_len < 20) {
-		dout << "frame too short to parse (<20)" << std::endl;
+	if(data_len < 14) {
+								// 14 is the minimum frame length (for ack frame)
+		dout << "frame too short to parse (<14)" << std::endl;
 		return;
 	}
 	#define HEX(a) std::hex << std::setfill('0') << std::setw(2) << int(a) << std::dec
@@ -293,12 +294,24 @@ void parse_control(char *buf, int length) {
 			break;
 		case 11:
 			dout << "RTS";
+			dout << std::endl;						// rts has two addrs
+
+			dout << "RA: ";
+			print_mac_address(h->addr1, true);
+			dout << "TA: ";
+			print_mac_address(h->addr2, true);
 			break;
 		case 12:
 			dout << "CTS";
 			break;
 		case 13:
 			dout << "ACK";
+			dout << std::endl;						// ack has only addr1
+
+			dout << "RA: ";
+			print_mac_address(h->addr1, true);
+
+	
 			break;
 		case 14:
 			dout << "CF-End";
@@ -310,12 +323,7 @@ void parse_control(char *buf, int length) {
 			dout << "Reserved";
 			break;
 	}
-	dout << std::endl;
-
-	dout << "RA: ";
-	print_mac_address(h->addr1, true);
-	dout << "TA: ";
-	print_mac_address(h->addr2, true);
+	
 
 }
 

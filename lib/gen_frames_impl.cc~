@@ -163,7 +163,7 @@ namespace gr {
 
 
 		// blob
-		pmt::pmt_t mac = pmt::make_blob(psdu, psdu_length);
+		pmt::pmt_t mac = pmt::make_blob(d_psdu, psdu_length);
 
 		// pdu
 		message_port_pub(pmt::mp("out"), pmt::cons(dict, mac));
