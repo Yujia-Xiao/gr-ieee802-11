@@ -129,20 +129,19 @@ namespace gr {
 		
 		if (d_frame_type == 0)   
 	        {
-		  // data frame
-		  generate_mac_data_frame(msdu, msg_len, d_duration, &psdu, &psdu_length);
+		 // management frame
+		  generate_mac_management_frame();
 	        }
 		else if (d_frame_type == 1)
 		  {
-		    // management frame
-		    generate_mac_management_frame();
+		    // ack frame
+		    generate_mac_ack_frame(d_duration, &psdu, &psdu_length);
 		  }
 		else if (d_frame_type == 2)
 		  {
-		    // ack frame
-		    generate_mac_ack_frame(d_duration, &psdu, &psdu_length);
-
-		  }
+		     // data frame
+		  generate_mac_data_frame(msdu, msg_len, d_duration, &psdu, &psdu_length);
+		}
 
 
 		dict = pmt::dict_add(dict, pmt::mp("crc_included"), pmt::PMT_T);

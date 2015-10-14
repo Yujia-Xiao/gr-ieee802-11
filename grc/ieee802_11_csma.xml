@@ -1,0 +1,23 @@
+<block>
+  <name>Csma</name>
+  <key>ieee802_11_csma</key>
+  <category>IEEE802.11</category>
+  <import>import ieee802_11</import>
+  <make>ieee802_11.csma($threshold, $signal_power)</make>
+  <param>
+    <name>Threshold</name>
+    <key>threshold</key>
+    <type>float</type>
+  </param>
+	<sink>
+		<name>in</name>
+		<type>message</type>
+		<optional>1</optional>
+	</sink>
+	<source>
+		<name>out</name>
+		<type>message</type>
+		<optional>1</optional>
+	</source>
+
+</block>

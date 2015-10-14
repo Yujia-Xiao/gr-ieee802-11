@@ -30,10 +30,10 @@ namespace gr {
     {
      private:
       float d_threshold;
-      float d_signal_power;
+
 
      public:
-      csma_impl(float threshold, float signal_power);
+      csma_impl(float threshold);
       ~csma_impl();
 
      
@@ -48,7 +48,7 @@ namespace gr {
 
 	void in(pmt::pmt_t msg);
 	void wait_time(double wait_duration);
-	bool channel_state(float threshold);
+	bool channel_state(float threshold, double * power);
     };
   } // namespace ieee802_11
 } // namespace gr

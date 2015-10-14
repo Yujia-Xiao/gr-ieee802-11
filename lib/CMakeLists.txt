@@ -111,6 +111,7 @@ list(APPEND gr_ieee802_11_sources
     gen_frames_impl.cc
     csma_impl.cc
     channel_power_impl.cc
+    sshm.c
 )
 
 list(APPEND gr_ieee802_11_libs

@@ -28,6 +28,8 @@
 #include <cstdlib>
 #include <cmath>
 #include "sshm.h"
+#include <ctime>
+
 
 
 
@@ -36,16 +38,16 @@ namespace gr {
   namespace ieee802_11 {
 
     csma::sptr
-    csma::make(float threshold, float signal_power)
+    csma::make(float threshold)
     {
       return gnuradio::get_initial_sptr
-        (new csma_impl(threshold, signal_power));
+        (new csma_impl(threshold));
     }
 
     /*
      * The private constructor
      */
-    csma_impl::csma_impl(float threshold, float signal_power)
+    csma_impl::csma_impl(float threshold)
       : gr::block("csma",
               gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(0, 0, 0))
@@ -56,7 +58,7 @@ namespace gr {
 				boost::bind(&csma_impl::in, this, _1));
 		
 		d_threshold = threshold;
-		d_signal_power = signal_power;
+
 		
 	}
 
@@ -101,21 +103,21 @@ namespace gr {
 		if (segmentid<0){printf("Error creating segmentid"); exit(0);};
 		
 		//parameter declaration
-		double max_attempts = 4.0;
-		double cwmin[2] = {3.0, 15.0};
+		int max_attempts = 4;
+		int cwmin[2] = {3, 15};
 		double slot_time = 13.0; //micro-seconds
 		double aifs[2] = {58.0, 149.0};
 		
 		// extract the dictionary for the ac level
 		pmt::pmt_t p_dict(pmt::car(msg));
-		pmt::pmt_t ac_level = pmt::pmt_dict_ref(p_dict, pmt::mp("ac_level"), pmt::PMT_NIL);
-		int ac = (int) pmt::mp(ac_level);
+		pmt::pmt_t ac_level = pmt::dict_ref(p_dict, pmt::mp("ac_level"), pmt::PMT_NIL);
+		int ac = (int) pmt::to_long(ac_level);
 		
 		//check channel state
 		bool okay_to_send = false;
 		okay_to_send = channel_state(d_threshold, power); 							// need to deal with
 		
-		double n_attempts = 0;
+		int n_attempts = 0;
 		double counter;
 		int backoff;
 		
@@ -130,7 +132,8 @@ namespace gr {
 			
 			
 			//slot
-			backoff = (int) (rand() % (cwmin[ac]*pow(2,n_attempts)));
+			srand(time(NULL));
+			backoff = rand() % (int)(cwmin[ac]*pow(2,n_attempts));
 			counter = backoff;
 			
 			while (counter>0) 
@@ -175,7 +178,7 @@ namespace gr {
 	}
 	
 	bool 
-	csma_impl::channel_state(float threshold, float * power)
+	csma_impl::channel_state(float threshold, double * power)
 	{
 		
 		if (*power >= threshold) {return true;}

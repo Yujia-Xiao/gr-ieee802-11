@@ -1,0 +1,20 @@
+<block>
+  <name>Channel power</name>
+  <key>ieee802_11_channel_power</key>
+  <category>IEEE802.11</category>
+  <import>import ieee802_11</import>
+  <make>ieee802_11.channel_power($n_samples)</make>
+  <param>
+    <name>N_samples</name>
+    <key>n_samples</key>
+    <type>int</type>
+  </param>
+  <sink>
+    <name>in</name>
+    <type>float</type>
+  </sink>
+  <source>
+    <name>out</name>
+    <type>float</type>
+  </source>
+</block>
