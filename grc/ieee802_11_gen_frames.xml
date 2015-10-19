@@ -8,6 +8,18 @@
     <name>Frame_type</name>
     <key>frame_type</key>
     <type>float</type>
+    <option>
+		<name>0 - Management</name>
+		<key>0</key>
+	</option>
+	<option>
+		<name>1 - Control_ACK</name>
+		<key>1</key>
+	</option>
+	<option>
+		<name>2 - Data</name>
+		<key>2</key>
+	</option>
   </param>
   <param>
     <name>Ac</name>
