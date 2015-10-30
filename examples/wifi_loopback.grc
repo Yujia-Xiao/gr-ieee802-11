@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<?grc format='1' created='3.7.9'?>
+<?grc format='1' created='3.7.8'?>
 <flow_graph>
   <timestamp>Sat Feb  1 18:28:19 2014</timestamp>
   <block>
@@ -49,16 +49,8 @@
       <value>0</value>
     </param>
     <param>
-      <key>qt_qss_theme</key>
-      <value></value>
-    </param>
-    <param>
       <key>realtime_scheduling</key>
       <value></value>
-    </param>
-    <param>
-      <key>run_command</key>
-      <value>{python} -u {filename}</value>
     </param>
     <param>
       <key>run_options</key>
@@ -572,7 +564,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(440, 427)</value>
+      <value>(512, 427)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -632,6 +624,53 @@
     <param>
       <key>type</key>
       <value>float</value>
+    </param>
+    <param>
+      <key>tag</key>
+      <value>packet_len</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_tagged_stream_to_pdu</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(88, 371)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>blocks_tagged_stream_to_pdu_0</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>complex</value>
     </param>
     <param>
       <key>tag</key>
@@ -710,7 +749,7 @@
     </param>
   </block>
   <block>
-    <key>foo_packet_pad2</key>
+    <key>es_source</key>
     <param>
       <key>alias</key>
       <value></value>
@@ -724,16 +763,8 @@
       <value></value>
     </param>
     <param>
-      <key>debug</key>
-      <value>False</value>
-    </param>
-    <param>
-      <key>delay_sec</key>
-      <value>0.001</value>
-    </param>
-    <param>
-      <key>delay</key>
-      <value>False</value>
+      <key>eb</key>
+      <value>asap</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -741,15 +772,23 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(272, 395)</value>
+      <value>(280, 441)</value>
     </param>
     <param>
       <key>_rotation</key>
       <value>0</value>
     </param>
     <param>
+      <key>nthreads</key>
+      <value>1</value>
+    </param>
+    <param>
       <key>id</key>
-      <value>foo_packet_pad2_0</value>
+      <value>es_source_0</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>complex</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -757,15 +796,11 @@
     </param>
     <param>
       <key>minoutbuf</key>
-      <value>out_buf_size</value>
-    </param>
-    <param>
-      <key>pad_front</key>
-      <value>500</value>
-    </param>
-    <param>
-      <key>pad_tail</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>num_streams</key>
+      <value>1</value>
     </param>
   </block>
   <block>
@@ -851,7 +886,7 @@
     </param>
     <param>
       <key>frame_type</key>
-      <value>1</value>
+      <value>2</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -1126,7 +1161,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(152, 515)</value>
+      <value>(88, 515)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1208,13 +1243,19 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
+    <source_block_id>blocks_tagged_stream_to_pdu_0</source_block_id>
+    <sink_block_id>es_source_0</sink_block_id>
+    <source_key>pdus</source_key>
+    <sink_key>schedule_event</sink_key>
+  </connection>
+  <connection>
     <source_block_id>channels_channel_model_0</source_block_id>
     <sink_block_id>wifi_phy_hier_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>foo_packet_pad2_0</source_block_id>
+    <source_block_id>es_source_0</source_block_id>
     <sink_block_id>blocks_multiply_const_vxx_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
@@ -1251,7 +1292,7 @@
   </connection>
   <connection>
     <source_block_id>wifi_phy_hier_0</source_block_id>
-    <sink_block_id>foo_packet_pad2_0</sink_block_id>
+    <sink_block_id>blocks_tagged_stream_to_pdu_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
