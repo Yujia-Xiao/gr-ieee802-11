@@ -22,6 +22,8 @@ Some flowgraph contain dependencies gr-eventstream, which can be installed here:
 
 ----------------------BELOW IS THE ORIGINAL README FROM BASTIBL----------------------------
 
+
+
 Hi,
 
 this an IEEE 802.11 a/g/p transceiver for GNU Radio v3.7. Over the air, I tested it with the Ettus USRP N210 with XCVR2450 and CBX daughterboards. For interoperability tests I use mainly an Atheros (ath5k) WiFi card. The code can also be used for packet error rate simulations.
