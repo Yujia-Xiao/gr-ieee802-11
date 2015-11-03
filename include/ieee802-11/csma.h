@@ -46,11 +46,11 @@ namespace gr {
        * class. ieee802-11::csma::make is the public interface for
        * creating new instances.
        */
-      static sptr make(float threshold);
+      static sptr make(float threshold, bool debug);
     };
 
-  } // namespace ieee802_11
+  } // namespace ieee802-11
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_11_CSMA_H */
+#endif /* INCLUDED_IEEE802-11_CSMA_H */
 

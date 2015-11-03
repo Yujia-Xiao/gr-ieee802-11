@@ -27,6 +27,7 @@
 #include <boost/crc.hpp>
 #include <cstdlib>
 #include <cmath>
+#include <fstream>
 #include "sshm.h"
 #include <ctime>
 
@@ -38,16 +39,16 @@ namespace gr {
   namespace ieee802_11 {
 
     csma::sptr
-    csma::make(float threshold)
+    csma::make(float threshold, bool debug)
     {
       return gnuradio::get_initial_sptr
-        (new csma_impl(threshold));
+        (new csma_impl(threshold, debug));
     }
 
     /*
      * The private constructor
      */
-    csma_impl::csma_impl(float threshold)
+    csma_impl::csma_impl(float threshold, bool debug)
       : gr::block("csma",
               gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(0, 0, 0))
@@ -58,7 +59,7 @@ namespace gr {
 				boost::bind(&csma_impl::in, this, _1));
 		
 		d_threshold = threshold;
-
+        d_debug = debug;
 		
 	}
 
@@ -96,6 +97,8 @@ namespace gr {
     void
     csma_impl::in(pmt::pmt_t msg)
     {
+	
+	    
 		// get share memory
 		int segmentid;
 		double * power;
@@ -113,9 +116,24 @@ namespace gr {
 		pmt::pmt_t ac_level = pmt::dict_ref(p_dict, pmt::mp("ac_level"), pmt::PMT_NIL);
 		int ac = (int) pmt::to_long(ac_level);
 		
+		
+		
+		if (d_debug)
+		{	
+			fp.open("csma_log.txt");
+			fp << "==========msg received===========\n";
+			fp << "ac level: " << ac <<std::endl;
+	    }
+		
+		
 		//check channel state
 		bool okay_to_send = false;
 		okay_to_send = channel_state(d_threshold, power); 							// need to deal with
+		if (d_debug)
+		{
+			if (okay_to_send) {fp << "channel is free, jumping to send...\n";}
+			else {fp << "channel is BUSY, waiting...\n";}
+		}
 		
 		int n_attempts = 0;
 		double counter;
@@ -127,6 +145,7 @@ namespace gr {
 		
 		while (!okay_to_send)
 		{
+			if (d_debug) fp << "waiting AIFS "<<aifs[ac] << "micro secs\n";
 			//wait for aifs
 			wait_time(aifs[ac]);
 			
@@ -135,13 +154,20 @@ namespace gr {
 			srand(time(NULL));
 			backoff = rand() % (int)(cwmin[ac]*pow(2,n_attempts));
 			counter = backoff;
-			
+		
+			if (d_debug) fp << "attempt #"<<n_attempts<<", random backoff: "<<backoff <<", counter: "<<counter<<std::endl;
+		
 			while (counter>0) 
 			{
 				wait_time(slot_time);
 				
 				counter--;
+				
+				if (d_debug) fp << "attempt #"<<n_attempts<<", random backoff: "<<backoff <<", counter: "<<std::endl;
+				
 				okay_to_send = channel_state(d_threshold, power);
+				if (okay_to_send) {fp << "channel is free\n" ;}
+				else {fp << "channel is busy, back to aifs\n";}
 				if (!okay_to_send)
 				{
 					wait_time(aifs[ac]);
@@ -150,16 +176,22 @@ namespace gr {
 			
 			okay_to_send = channel_state(d_threshold, power);
 			n_attempts++;
-			if (n_attempts > max_attempts) {return;}
+			if (n_attempts > max_attempts) {
+				if (d_debug) {fp << "max attempts reached\n";}
+				return;
+				}
 			
 		}
 		
 		//send the msg
-		message_port_pub(pmt::mp("out"), msg);
 		
+		message_port_pub(pmt::mp("out"), msg);
+		if (d_debug) fp << "msg sent. Waiting for aifs\n";
 		//post-tx aifs
+		
 		wait_time(aifs[ac]);
 		
+		if (d_debug) {fp.close();}
 		
 	}
 	
@@ -173,6 +205,7 @@ namespace gr {
 		time(&stop_time);
 		while((stop_time - start_time)/1000000 <= wait_duration)
 		{
+			
 			time(&stop_time);
 		}
 	}

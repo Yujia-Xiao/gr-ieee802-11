@@ -22,6 +22,7 @@
 #define INCLUDED_IEEE802_11_CSMA_IMPL_H
 
 #include <ieee802-11/csma.h>
+#include <fstream>
 
 namespace gr {
   namespace ieee802_11 {
@@ -30,28 +31,22 @@ namespace gr {
     {
      private:
       float d_threshold;
-
+      bool d_debug;
+      std::ofstream fp;
 
      public:
-      csma_impl(float threshold);
+      csma_impl(float threshold, bool debug);
       ~csma_impl();
 
-     
-      //void forecast (int noutput_items, gr_vector_int &ninput_items_required);
+      // Where all the action really happens
+      void in(pmt::pmt_t msg);
+      void wait_time(double wait_duration);
+      bool channel_state(float threshold, double * power);
 
-      //int general_work(int noutput_items,
-	//	       gr_vector_int &ninput_items,
-	//	       gr_vector_const_void_star &input_items,
-	//	       gr_vector_void_star &output_items);
-    //};
-
-
-	void in(pmt::pmt_t msg);
-	void wait_time(double wait_duration);
-	bool channel_state(float threshold, double * power);
     };
-  } // namespace ieee802_11
+
+  } // namespace ieee802-11
 } // namespace gr
 
-#endif /* INCLUDED_IEEE802_11_CSMA_IMPL_H */
+#endif /* INCLUDED_IEEE802-11_CSMA_IMPL_H */
 
