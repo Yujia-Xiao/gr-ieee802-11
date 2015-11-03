@@ -281,7 +281,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(496, 155)</value>
+      <value>(488, 171)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -614,7 +614,7 @@
     </param>
     <param>
       <key>type</key>
-      <value></value>
+      <value>intx</value>
     </param>
     <param>
       <key>value</key>
@@ -661,7 +661,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(128, 419)</value>
+      <value>(176, 371)</value>
     </param>
     <param>
       <key>_rotation</key>

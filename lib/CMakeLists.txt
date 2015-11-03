@@ -112,6 +112,7 @@ list(APPEND gr_ieee802_11_sources
     csma_impl.cc
     channel_power_impl.cc
     sshm.c
+    check_addr_impl.cc
 )
 
 list(APPEND gr_ieee802_11_libs
@@ -120,8 +121,7 @@ list(APPEND gr_ieee802_11_libs
     ${ITPP_LIBRARIES}
     ${LOG4CPP_LIBRARIES}
 )
-add_library(gnuradio-ieee802_11 SHARED ${gr_ieee802_11_sources}
-    )
+add_library(gnuradio-ieee802_11 SHARED ${gr_ieee802_11_sources})
 add_dependencies(gnuradio-ieee802_11 ieee802_11_generated_sources)
 target_link_libraries(gnuradio-ieee802_11 ${gr_ieee802_11_libs})
 set_target_properties(gnuradio-ieee802_11 PROPERTIES DEFINE_SYMBOL "gnuradio_ieee802_11_EXPORTS")

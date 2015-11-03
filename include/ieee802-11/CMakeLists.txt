@@ -83,6 +83,7 @@ list(APPEND include_sources
     gen_frames.h
     csma.h
     channel_power.h
+    check_addr.h
 )
 install(
     FILES ${include_sources}
