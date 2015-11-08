@@ -305,7 +305,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(8, 160)</value>
+      <value>(16, 187)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -317,7 +317,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>32000</value>
+      <value>16000</value>
     </param>
   </block>
   <block>
@@ -380,6 +380,33 @@
     </param>
   </block>
   <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(16, 123)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>threshold</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>3</value>
+    </param>
+  </block>
+  <block>
     <key>blocks_add_xx</key>
     <param>
       <key>alias</key>
@@ -399,7 +426,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(408, 361)</value>
+      <value>(400, 313)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -431,6 +458,49 @@
     </param>
   </block>
   <block>
+    <key>blocks_complex_to_mag</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(536, 201)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>blocks_complex_to_mag_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+  </block>
+  <block>
     <key>blocks_message_strobe</key>
     <param>
       <key>alias</key>
@@ -450,7 +520,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(112, 619)</value>
+      <value>(120, 643)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -474,7 +544,7 @@
     </param>
     <param>
       <key>period</key>
-      <value>9999</value>
+      <value>9999999</value>
     </param>
   </block>
   <block>
@@ -497,11 +567,11 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>1</value>
+      <value>0</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(696, 361)</value>
+      <value>(864, 137)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -509,11 +579,11 @@
     </param>
     <param>
       <key>id</key>
-      <value>blocks_null_sink_0</value>
+      <value>blocks_null_sink_1</value>
     </param>
     <param>
       <key>type</key>
-      <value>complex</value>
+      <value>float</value>
     </param>
     <param>
       <key>num_inputs</key>
@@ -525,14 +595,10 @@
     </param>
   </block>
   <block>
-    <key>blocks_null_sink</key>
+    <key>blocks_throttle</key>
     <param>
       <key>alias</key>
       <value></value>
-    </param>
-    <param>
-      <key>bus_conns</key>
-      <value>[[0,],]</value>
     </param>
     <param>
       <key>comment</key>
@@ -544,11 +610,11 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>1</value>
+      <value>True</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(696, 393)</value>
+      <value>(368, 195)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -556,15 +622,27 @@
     </param>
     <param>
       <key>id</key>
-      <value>blocks_null_sink_0_0</value>
+      <value>blocks_throttle_0</value>
+    </param>
+    <param>
+      <key>ignoretag</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>samples_per_second</key>
+      <value>samp_rate</value>
     </param>
     <param>
       <key>type</key>
       <value>complex</value>
-    </param>
-    <param>
-      <key>num_inputs</key>
-      <value>1</value>
     </param>
     <param>
       <key>vlen</key>
@@ -572,7 +650,7 @@
     </param>
   </block>
   <block>
-    <key>ieee802_11_ofdm_parse_mac</key>
+    <key>ieee802_11_channel_power</key>
     <param>
       <key>alias</key>
       <value></value>
@@ -587,15 +665,15 @@
     </param>
     <param>
       <key>debug</key>
-      <value>True</value>
+      <value>False</value>
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(688, 443)</value>
+      <value>(688, 187)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -603,11 +681,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>ieee802_11_ofdm_parse_mac_0</value>
-    </param>
-    <param>
-      <key>log</key>
-      <value>False</value>
+      <value>ieee802_11_channel_power_0</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -616,6 +690,69 @@
     <param>
       <key>minoutbuf</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>n_samples</key>
+      <value>16000</value>
+    </param>
+  </block>
+  <block>
+    <key>sim_rx</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(520, 355)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>sim_rx_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>bss_mac</key>
+      <value>[0xff, 0xff, 0xff, 0xff, 0xff, 0xff]</value>
+    </param>
+    <param>
+      <key>chan_est</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>dst_mac</key>
+      <value>[0x42, 0x42, 0x42, 0x42, 0x42, 0x42]</value>
+    </param>
+    <param>
+      <key>encoding</key>
+      <value>encoding</value>
+    </param>
+    <param>
+      <key>src_mac</key>
+      <value>[0x42, 0x42, 0x42, 0x42, 0x42, 0x42]</value>
     </param>
   </block>
   <block>
@@ -696,6 +833,10 @@
       <key>src_mac</key>
       <value>[0x23, 0x23, 0x23, 0x23, 0x23, 0x23]</value>
     </param>
+    <param>
+      <key>threshold</key>
+      <value>threshold</value>
+    </param>
   </block>
   <block>
     <key>sim_tx</key>
@@ -775,9 +916,21 @@
       <key>src_mac</key>
       <value>[0x23, 0x23, 0x23, 0x23, 0x23, 0x23]</value>
     </param>
+    <param>
+      <key>threshold</key>
+      <value>threshold</value>
+    </param>
   </block>
   <block>
-    <key>wifi_phy_hier</key>
+    <key>wxgui_numbersink2</key>
+    <param>
+      <key>avg_alpha</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>average</key>
+      <value>False</value>
+    </param>
     <param>
       <key>alias</key>
       <value></value>
@@ -791,49 +944,117 @@
       <value></value>
     </param>
     <param>
+      <key>decimal_places</key>
+      <value>10</value>
+    </param>
+    <param>
       <key>_enabled</key>
-      <value>1</value>
+      <value>True</value>
+    </param>
+    <param>
+      <key>factor</key>
+      <value>1.0</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(512, 361)</value>
+      <value>(864, 195)</value>
     </param>
     <param>
       <key>_rotation</key>
       <value>0</value>
     </param>
     <param>
+      <key>grid_pos</key>
+      <value></value>
+    </param>
+    <param>
       <key>id</key>
-      <value>wifi_phy_hier_0_0_0</value>
+      <value>wxgui_numbersink2_1</value>
     </param>
     <param>
-      <key>maxoutbuf</key>
+      <key>max_value</key>
+      <value>100</value>
+    </param>
+    <param>
+      <key>min_value</key>
+      <value>-100</value>
+    </param>
+    <param>
+      <key>notebook</key>
+      <value></value>
+    </param>
+    <param>
+      <key>number_rate</key>
+      <value>15</value>
+    </param>
+    <param>
+      <key>peak_hold</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>ref_level</key>
       <value>0</value>
     </param>
     <param>
-      <key>minoutbuf</key>
-      <value>0</value>
+      <key>samp_rate</key>
+      <value>samp_rate</value>
     </param>
     <param>
-      <key>chan_est</key>
-      <value>chan_est</value>
+      <key>show_gauge</key>
+      <value>True</value>
     </param>
     <param>
-      <key>encoding</key>
-      <value>encoding</value>
+      <key>title</key>
+      <value>Number Plot</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>units</key>
+      <value>Units</value>
+    </param>
+    <param>
+      <key>win_size</key>
+      <value></value>
     </param>
   </block>
   <connection>
     <source_block_id>blocks_add_xx_0</source_block_id>
-    <sink_block_id>wifi_phy_hier_0_0_0</sink_block_id>
+    <sink_block_id>blocks_throttle_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>blocks_message_strobe_0_0_0</source_block_id>
-    <sink_block_id>wifi_phy_hier_0_0_0</sink_block_id>
-    <source_key>strobe</source_key>
-    <sink_key>mac_in</sink_key>
+    <source_block_id>blocks_add_xx_0</source_block_id>
+    <sink_block_id>sim_rx_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_complex_to_mag_0</source_block_id>
+    <sink_block_id>ieee802_11_channel_power_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_throttle_0</source_block_id>
+    <sink_block_id>blocks_complex_to_mag_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_11_channel_power_0</source_block_id>
+    <sink_block_id>blocks_null_sink_1</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>ieee802_11_channel_power_0</source_block_id>
+    <sink_block_id>wxgui_numbersink2_1</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
   </connection>
   <connection>
     <source_block_id>sim_tx_0</source_block_id>
@@ -846,23 +1067,5 @@
     <sink_block_id>blocks_add_xx_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>1</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>wifi_phy_hier_0_0_0</source_block_id>
-    <sink_block_id>blocks_null_sink_0_0</sink_block_id>
-    <source_key>1</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>wifi_phy_hier_0_0_0</source_block_id>
-    <sink_block_id>ieee802_11_ofdm_parse_mac_0</sink_block_id>
-    <source_key>mac_out</source_key>
-    <sink_key>in</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>wifi_phy_hier_0_0_0</source_block_id>
-    <sink_block_id>blocks_null_sink_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
   </connection>
 </flow_graph>

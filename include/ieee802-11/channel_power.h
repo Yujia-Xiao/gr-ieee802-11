@@ -46,7 +46,7 @@ namespace gr {
        * class. ieee802-11::channel_power::make is the public interface for
        * creating new instances.
        */
-      static sptr make(int n_samples);
+      static sptr make(int n_samples, bool debug);
     };
 
   } // namespace ieee802-11

@@ -46,7 +46,7 @@ namespace gr {
        * class. ieee802-11::check_addr::make is the public interface for
        * creating new instances.
        */
-      static sptr make(std::vector<uint8_t> src_mac);
+      static sptr make(std::vector<uint8_t> src_mac, bool debug);
     };
 
   } // namespace ieee802-11

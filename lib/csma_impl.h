@@ -42,6 +42,8 @@ namespace gr {
       void in(pmt::pmt_t msg);
       void wait_time(double wait_duration);
       bool channel_state(float threshold, double * power);
+      int shm_get(int key, void **start_ptr, int size);
+      int shm_rm(int shmid);
 
     };
 

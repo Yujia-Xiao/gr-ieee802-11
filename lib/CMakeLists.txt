@@ -110,7 +110,6 @@ list(APPEND gr_ieee802_11_sources
     wifi_signal_field_impl.cc
     gen_frames_impl.cc
     channel_power_impl.cc
-    sshm.c
     check_addr_impl.cc
     csma_impl.cc
 )

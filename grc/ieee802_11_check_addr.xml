@@ -3,12 +3,27 @@
   <key>ieee802_11_check_addr</key>
   <category>IEEE802.11</category>
   <import>import ieee802_11</import>
-  <make>ieee802_11.check_addr($src_mac)</make>
+  <make>ieee802_11.check_addr($src_mac, $debug)</make>
   <param>
     <name>Src_mac</name>
     <key>src_mac</key>
     <type>raw</type>
   </param>
+  <param>
+		<name>Debug</name>
+		<key>debug</key>
+		<value>False</value>
+		<type>bool</type>
+
+		<option>
+			<name>Enable</name>
+			<key>True</key>
+		</option>
+		<option>
+			<name>Disable</name>
+			<key>False</key>
+		</option>
+	</param>
   <sink>
     <name>data input</name>
     <type>message</type>

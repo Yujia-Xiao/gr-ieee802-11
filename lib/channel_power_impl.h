@@ -30,9 +30,10 @@ namespace gr {
     {
      private:
       int d_n_samples;
+      bool d_debug;
 
      public:
-      channel_power_impl(int n_samples);
+      channel_power_impl(int n_samples, bool debug);
       ~channel_power_impl();
 
       // Where all the action really happens
@@ -42,6 +43,10 @@ namespace gr {
 		       gr_vector_int &ninput_items,
 		       gr_vector_const_void_star &input_items,
 		       gr_vector_void_star &output_items);
+      
+      int shm_get(int key, void **start_ptr, int size);
+      int shm_rm(int shmid);
+	
     };
 
   } // namespace ieee802-11

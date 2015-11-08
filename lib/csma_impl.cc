@@ -23,15 +23,19 @@
 #endif
 
 #include <gnuradio/io_signature.h>
+#include <gnuradio/block_detail.h>
 #include "csma_impl.h"
 #include <boost/crc.hpp>
 #include <cstdlib>
 #include <cmath>
-#include <fstream>
-#include "sshm.h"
 #include <ctime>
 
+#include <sys/shm.h>
+#include <sys/ipc.h>
+#include <sys/types.h>
 
+#define PERMS 0600
+#define dout d_debug && std::cout
 
 
 
@@ -70,43 +74,23 @@ namespace gr {
     {
     }
 
-    //void
-    //csma_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
-    //{
-        //* <+forecast+> e.g. ninput_items_required[0] = noutput_items */
-    //}
 
-    //int
-    //csma_impl::general_work (int noutput_items,
-                       //gr_vector_int &ninput_items,
-                       //gr_vector_const_void_star &input_items,
-                       //gr_vector_void_star &output_items)
-    //{
-        //const <+ITYPE*> *in = (const <+ITYPE*> *) input_items[0];
-        //<+OTYPE*> *out = (<+OTYPE*> *) output_items[0];
-
-        //// Do <+signal processing+>
-        //// Tell runtime system how many input items we consumed on
-        //// each input stream.
-        //consume_each (noutput_items);
-
-        //// Tell runtime system how many output items we produced.
-        //return noutput_items;
-    //}
     
     void
     csma_impl::in(pmt::pmt_t msg)
     {
-	
+	    dout << "==========msg received===========\n";
 	    
 		// get share memory
 		int segmentid;
 		double * power;
 		segmentid=shm_get(123456,(void**)&power,sizeof(double));
+		
+		
 		if (segmentid<0){printf("Error creating segmentid"); exit(0);};
 		
 		//parameter declaration
-		int max_attempts = 4;
+		int max_attempts = 15;
 		int cwmin[2] = {3, 15};
 		double slot_time = 13.0; //micro-seconds
 		double aifs[2] = {58.0, 149.0};
@@ -115,25 +99,21 @@ namespace gr {
 		pmt::pmt_t p_dict(pmt::car(msg));
 		pmt::pmt_t ac_level = pmt::dict_ref(p_dict, pmt::mp("ac_level"), pmt::PMT_NIL);
 		int ac = (int) pmt::to_long(ac_level);
-		
-		
-		
-		if (d_debug)
-		{	
-			fp.open("csma_log.txt");
-			fp << "==========msg received===========\n";
-			fp << "ac level: " << ac <<std::endl;
-	    }
+		dout << "ac level: " << ac <<std::endl;
+
 		
 		
 		//check channel state
 		bool okay_to_send = false;
-		okay_to_send = channel_state(d_threshold, power); 							// need to deal with
-		if (d_debug)
-		{
-			if (okay_to_send) {fp << "channel is free, jumping to send...\n";}
-			else {fp << "channel is BUSY, waiting...\n";}
-		}
+		okay_to_send = channel_state(d_threshold, power); 		
+		
+		if (okay_to_send) {
+			dout<<"channel is free, jumping to send...\n";
+			}
+		else {
+			dout << "channel is BUSY, waiting...\n";
+			}
+		
 		
 		int n_attempts = 0;
 		double counter;
@@ -145,7 +125,8 @@ namespace gr {
 		
 		while (!okay_to_send)
 		{
-			if (d_debug) fp << "waiting AIFS "<<aifs[ac] << "micro secs\n";
+			dout<<"################# Attempt "<< n_attempts <<std::endl;
+			dout << " Waiting AIFS "<<aifs[ac] << " micro secs\n";
 			//wait for aifs
 			wait_time(aifs[ac]);
 			
@@ -154,69 +135,97 @@ namespace gr {
 			srand(time(NULL));
 			backoff = rand() % (int)(cwmin[ac]*pow(2,n_attempts));
 			counter = backoff;
+			
+			dout <<" Backoff: "<< backoff<<std::endl;
+			dout <<" Counter: "<<counter<<std::endl;
 		
-			if (d_debug) fp << "attempt #"<<n_attempts<<", random backoff: "<<backoff <<", counter: "<<counter<<std::endl;
-		
-			while (counter>0) 
+			while (counter>=0) 
 			{
+				dout << " Waiting for slot time\n";
 				wait_time(slot_time);
-				
 				counter--;
-				
-				if (d_debug) fp << "attempt #"<<n_attempts<<", random backoff: "<<backoff <<", counter: "<<std::endl;
+				dout << "  Counter: "<< counter<<std::endl;
+
 				
 				okay_to_send = channel_state(d_threshold, power);
-				if (okay_to_send) {fp << "channel is free\n" ;}
-				else {fp << "channel is busy, back to aifs\n";}
-				if (!okay_to_send)
-				{
-					wait_time(aifs[ac]);
-				}
+				if (okay_to_send) {
+					dout << "   Channel is free\n" ;
+					}
+				else {
+					dout << "   Channel is busy, back to aifs\n";
+					n_attempts++;
+					if (n_attempts > max_attempts) {
+						dout << "Max attempts reached\n";
+						return;
+						}
+				    break;
+					}				   
 			}
 			
-			okay_to_send = channel_state(d_threshold, power);
-			n_attempts++;
-			if (n_attempts > max_attempts) {
-				if (d_debug) {fp << "max attempts reached\n";}
-				return;
-				}
-			
+			if (okay_to_send) {break;}
 		}
 		
 		//send the msg
 		
 		message_port_pub(pmt::mp("out"), msg);
-		if (d_debug) fp << "msg sent. Waiting for aifs\n";
+		dout << "Msg sent. Waiting for aifs\n";
 		//post-tx aifs
 		
 		wait_time(aifs[ac]);
 		
-		if (d_debug) {fp.close();}
+		dout << "==========csma end===========\n\n";
+
 		
 	}
 	
 	void 
 	csma_impl::wait_time(double wait_duration)
 	{
-		time_t start_time;
-		time_t stop_time;
+		clock_t start_time;
+		clock_t stop_time;
 		
-		time(&start_time);
-		time(&stop_time);
-		while((stop_time - start_time)/1000000 <= wait_duration)
+		start_time = clock();
+		dout << "evaluating start time"<< start_time<<"\n";
+		
+		stop_time = clock();
+		
+		while((stop_time - start_time) <= wait_duration)
 		{
-			
-			time(&stop_time);
+		
+			stop_time = clock();
 		}
+		dout << "evaluating final stop time"<<stop_time<<"\n";
 	}
 	
 	bool 
 	csma_impl::channel_state(float threshold, double * power)
 	{
+			dout << "&power is " << * power <<std::endl;
+			dout << "&power address is "<< power <<std::endl;
+			dout << "&threshold is "<< threshold <<std::endl;
 		
-		if (*power >= threshold) {return true;}
-		return false;
+		if (*power >= threshold) {return false;}
+		return true;
 	}
+	
+	
+	int
+	csma_impl::shm_get(int key, void **start_ptr, int size)
+	{
+		int shmid;
+		shmid = shmget((key_t) key, size, PERMS | IPC_CREAT);
+		(*start_ptr) = (void *) shmat(shmid, (char *) 0, 0);
+		return shmid;
+	}
+
+
+	int
+	csma_impl::shm_rm(int shmid)
+	{
+		return shmctl(shmid, IPC_RMID, (struct shmid_ds *) 0);
+
+	}
+
 
   } /* namespace ieee802_11 */
 } /* namespace gr */

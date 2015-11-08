@@ -26,20 +26,22 @@
 #include <gnuradio/block_detail.h>
 #include "check_addr_impl.h"
 
+#define dout d_debug && std::cout
+
 namespace gr {
   namespace ieee802_11 {
 
     check_addr::sptr
-    check_addr::make(std::vector<uint8_t> src_mac)
+    check_addr::make(std::vector<uint8_t> src_mac, bool debug)
     {
       return gnuradio::get_initial_sptr
-        (new check_addr_impl(src_mac));
+        (new check_addr_impl(src_mac, debug));
     }
 
     /*
      * The private constructor
      */
-    check_addr_impl::check_addr_impl(std::vector<uint8_t> src_mac)
+    check_addr_impl::check_addr_impl(std::vector<uint8_t> src_mac, bool debug)
       : gr::block("check_addr",
               gr::io_signature::make(0,0,0),
               gr::io_signature::make(0,0,0))
@@ -55,6 +57,7 @@ namespace gr {
 		{
 			d_src_mac[i] = src_mac[i];
 		}	
+		d_debug = debug;
 	}
 
     /*
@@ -77,8 +80,15 @@ namespace gr {
 		pmt::pmt_t msg1 = pmt::cdr(msg);
 		int data_len = pmt::blob_length(msg1);
 		mac_header *h = (mac_header*)pmt::blob_data(msg1);
+		dout << "[check_addr]addr1 is ";
+		for (int i=0;i<6;i++) dout << unsigned(h->addr1[i]) <<" ";
+		dout << std::endl;
 		
-		if (h->addr1 == d_src_mac) {
+		dout << "[check_addr]d_src_mac is ";
+		for (int i=0;i<6;i++) dout << unsigned(d_src_mac[i]) <<" ";
+		dout << std::endl;
+		
+		if (equal(h->addr1,d_src_mac)) {
 			message_port_pub(pmt::mp("out"), msg);
 			
 		}
@@ -90,6 +100,21 @@ namespace gr {
 		if (mac.size() != 6) return false;
 		return true;
 	}
+	bool
+	check_addr_impl::equal(uint8_t *header_addr, uint8_t *src_mac_addr)
+	{
+		bool res = true;
+		for (int i=0; i<6; i++)
+		{
+			if (unsigned(header_addr[i]) != unsigned(src_mac_addr[i]))
+			{
+				res = false;
+				break;
+			}
+		}
+		return res;
+		
+	} 
 	
 	
 

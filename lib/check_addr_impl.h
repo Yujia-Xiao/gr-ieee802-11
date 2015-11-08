@@ -41,16 +41,17 @@ namespace gr {
     {
      private:
      uint8_t d_src_mac[6];
+     bool d_debug;
 
 
      public:
-      check_addr_impl(std::vector<uint8_t> src_mac);
+      check_addr_impl(std::vector<uint8_t> src_mac, bool debug);
       ~check_addr_impl();
 
       // Where all the action really happens
      void data_input (pmt::pmt_t msg);
      bool check_mac(std::vector<uint8_t> mac);
-     
+     bool equal(uint8_t *header_addr, uint8_t *src_mac_addr);
     };
 
   } // namespace ieee802-11

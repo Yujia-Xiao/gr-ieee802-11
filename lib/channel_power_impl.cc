@@ -24,27 +24,34 @@
 
 #include <gnuradio/io_signature.h>
 #include "channel_power_impl.h"
-#include "sshm.h"
+
+#include <sys/shm.h>
+#include <sys/ipc.h>
+#include <sys/types.h>
+
+#define PERMS 0600
+#define dout d_debug && std::cout
 
 namespace gr {
   namespace ieee802_11 {
 
     channel_power::sptr
-    channel_power::make(int n_samples)
+    channel_power::make(int n_samples, bool debug)
     {
       return gnuradio::get_initial_sptr
-        (new channel_power_impl(n_samples));
+        (new channel_power_impl(n_samples, debug));
     }
 
     /*
      * The private constructor
      */
-    channel_power_impl::channel_power_impl(int n_samples)
+    channel_power_impl::channel_power_impl(int n_samples, bool debug)
       : gr::block("channel_power",
               gr::io_signature::make(1, 1, sizeof(float)),
               gr::io_signature::make(1, 1, sizeof(float)))
     {
 		d_n_samples = n_samples;
+		d_debug = debug;
 		}
 
     /*
@@ -80,7 +87,7 @@ namespace gr {
         for(int i=0;i<noutput_items;i++)
         {
 			x=0;
-			for (int j=0;j<d_n_samples;j++)
+			for (int j=i;j<i+d_n_samples;j++)
 			{
 				x = x + in[j] * in[j];
 			}
@@ -88,7 +95,11 @@ namespace gr {
 			*power = out[i];
 		}
         
- 
+        dout << "[channel_power]Power evaluated to be " << *power << std::endl;
+        dout << "noutput_items is " << noutput_items << std::endl;
+        
+        
+        
         
 
         
@@ -99,6 +110,23 @@ namespace gr {
         // Tell runtime system how many output items we produced.
         return noutput_items;
     }
+
+	int
+	channel_power_impl::shm_get(int key, void **start_ptr, int size)
+	{
+		int shmid;
+		shmid = shmget((key_t) key, size, PERMS | IPC_CREAT);
+		(*start_ptr) = (void *) shmat(shmid, (char *) 0, 0);
+		return shmid;
+	}
+
+
+	int
+	channel_power_impl::shm_rm(int shmid)
+	{
+		return shmctl(shmid, IPC_RMID, (struct shmid_ds *) 0);
+
+	}
 
   } /* namespace ieee802-11 */
 } /* namespace gr */
