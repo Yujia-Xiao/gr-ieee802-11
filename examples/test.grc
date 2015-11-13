@@ -257,7 +257,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(128, 219)</value>
+      <value>(48, 235)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -445,7 +445,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(672, 307)</value>
+      <value>(680, 259)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -488,7 +488,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -766,7 +766,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(328, 273)</value>
+      <value>(296, 297)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -884,7 +884,7 @@
     </param>
     <param>
       <key>n_samples</key>
-      <value>15000</value>
+      <value>8</value>
     </param>
   </block>
   <block>
