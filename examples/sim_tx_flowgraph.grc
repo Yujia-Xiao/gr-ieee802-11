@@ -235,6 +235,33 @@
     </param>
   </block>
   <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(208, 123)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>mean</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>3000</value>
+    </param>
+  </block>
+  <block>
     <key>variable_slider</key>
     <param>
       <key>comment</key>
@@ -450,6 +477,33 @@
     </param>
     <param>
       <key>_coordinate</key>
+      <value>(288, 123)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>std</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>3000</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
       <value>(16, 123)</value>
     </param>
     <param>
@@ -579,7 +633,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(120, 643)</value>
+      <value>(56, 635)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -604,6 +658,61 @@
     <param>
       <key>period</key>
       <value>9999999</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_message_strobe_random</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>dist</key>
+      <value>blocks.STROBE_POISSON</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(416, 544)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>blocks_message_strobe_random_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>mean</key>
+      <value>1000</value>
+    </param>
+    <param>
+      <key>msg</key>
+      <value>pmt.intern("TEST")</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>std</key>
+      <value>100</value>
     </param>
   </block>
   <block>
@@ -984,27 +1093,23 @@
     </param>
     <param>
       <key>mean</key>
-      <value>2000</value>
+      <value>mean</value>
     </param>
     <param>
       <key>msg</key>
       <value>pmt.intern("".join("x" for i in range(pdu_length)))</value>
     </param>
     <param>
-      <key>period</key>
-      <value>2000</value>
-    </param>
-    <param>
       <key>src_mac</key>
       <value>[0x23, 0x23, 0x23, 0x23, 0x23, 0x23]</value>
     </param>
     <param>
-      <key>threshold</key>
-      <value>threshold</value>
+      <key>std</key>
+      <value>std</value>
     </param>
     <param>
-      <key>var</key>
-      <value>1000</value>
+      <key>threshold</key>
+      <value>threshold</value>
     </param>
   </block>
   <block>
@@ -1027,7 +1132,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(48, 451)</value>
+      <value>(40, 419)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1075,27 +1180,23 @@
     </param>
     <param>
       <key>mean</key>
-      <value>2000</value>
+      <value>mean</value>
     </param>
     <param>
       <key>msg</key>
       <value>pmt.intern("".join("o" for i in range(pdu_length)))</value>
     </param>
     <param>
-      <key>period</key>
-      <value>2000</value>
-    </param>
-    <param>
       <key>src_mac</key>
       <value>[0x23, 0x23, 0x23, 0x23, 0x23, 0x23]</value>
     </param>
     <param>
-      <key>threshold</key>
-      <value>threshold</value>
+      <key>std</key>
+      <value>std</value>
     </param>
     <param>
-      <key>var</key>
-      <value>1000</value>
+      <key>threshold</key>
+      <value>threshold</value>
     </param>
   </block>
   <block>

@@ -865,12 +865,16 @@
       <value></value>
     </param>
     <param>
+      <key>debug</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>_enabled</key>
       <value>True</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(256, 235)</value>
+      <value>(248, 267)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -933,7 +937,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(368, 139)</value>
+      <value>(392, 131)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -980,7 +984,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(112, 259)</value>
+      <value>(64, 259)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1054,7 +1058,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(384, 272)</value>
+      <value>(464, 289)</value>
     </param>
     <param>
       <key>_rotation</key>

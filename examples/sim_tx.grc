@@ -128,7 +128,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>0</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -157,6 +157,61 @@
     <param>
       <key>period</key>
       <value>period</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_message_strobe_random</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>dist</key>
+      <value>blocks.STROBE_UNIFORM</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(8, 139)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>blocks_message_strobe_r_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>mean</key>
+      <value>mean</value>
+    </param>
+    <param>
+      <key>msg</key>
+      <value>msg</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>std</key>
+      <value>std</value>
     </param>
   </block>
   <block>
@@ -771,7 +826,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>1000</value>
+      <value>1</value>
     </param>
   </block>
   <block>
@@ -872,7 +927,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>0</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -962,7 +1017,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(800, 83)</value>
+      <value>(792, 227)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -970,7 +1025,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>threshold</value>
+      <value>std</value>
     </param>
     <param>
       <key>label</key>
@@ -1005,7 +1060,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(792, 227)</value>
+      <value>(800, 83)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1013,7 +1068,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>var</value>
+      <value>threshold</value>
     </param>
     <param>
       <key>label</key>
@@ -1029,7 +1084,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>10</value>
+      <value>1</value>
     </param>
   </block>
   <block>
@@ -1080,7 +1135,7 @@
     </param>
   </block>
   <connection>
-    <source_block_id>blocks_message_strobe_0</source_block_id>
+    <source_block_id>blocks_message_strobe_r_0</source_block_id>
     <sink_block_id>ieee802_11_gen_frames_0</sink_block_id>
     <source_key>strobe</source_key>
     <sink_key>data input</sink_key>

@@ -84,6 +84,7 @@ namespace gr {
         
         // Do <+signal processing+>
         float x;
+        long double count = 0.0;
         for(int i=0;i<noutput_items;i++)
         {
 			x=0;
@@ -93,6 +94,8 @@ namespace gr {
 			}
 			out[i] = x/d_n_samples;
 			*power = out[i];
+			
+			
 		}
         
         dout << "[channel_power]Power evaluated to be " << *power << std::endl;
