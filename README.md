@@ -1,3 +1,8 @@
+[Yujia-Xiao] This is originally forked from bastibl and I am continuing the work of garygml's thread. 
+The objective is to build a multiple-node wireless communication system model using 802.11p protocol.
+This will require a MAC design, which is suitable to my UAV project, to be added into the original work. 
+
+---------------------BELOW IS FROM ORIGINAL README FROM GARYGML AND BASTIBL ----------------
 [garygml] This is forked from bastian bloessl's gr-ieee802-11 with slight modification and additions. Some flowgraph contain dependencies gr-eventstream, which can be installed here:
 
     git clone https://github.com/osh/gr-eventstream.git
